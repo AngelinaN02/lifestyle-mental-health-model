@@ -14,6 +14,9 @@ Models are tained using Logisitic Regression and Random Forest, and SHAP is used
 ---
 
 ## Dataset
+- **Title**: Mental Health and Lifestyle Dataset for Sentiment Analysis
+- **Author**: B. Pandey
+- **Source**:  [Zenodo – DOI: 10.5281/zenodo.14838680](https://doi.org/10.5281/zenodo.14838680)
 - **Type**: Tabular (CSV)
 - **Size**: ~50,000 rows, 17 columns 
 - **Target**: `Mental_Health_Condition` (Yes/No)
@@ -27,7 +30,7 @@ Models are tained using Logisitic Regression and Random Forest, and SHAP is used
 - Python
 - Pandas, NumPy
 - Scikit-learn
-- SHAP (SHapley Additive Explanations)
+- SHAP (Shapley Additive Explanations)
 - Jupyter Notebook
 
 ---
