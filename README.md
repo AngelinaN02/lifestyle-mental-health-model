@@ -26,7 +26,19 @@ We trained two models - Logistic Regression and Random Forest - and used SHAP (S
   - Work Hours, Diet Quality, Social Media Usage
   - Smoking, Alcohol, Medication Usage
 
- ---
+---
+
+## Exploratory Data Analysis (EDA)
+### Stress vs. Mental Health
+![Stress Barplot](visuals/Stress_Barplot.png)
+
+### Sleep Hours Distribution by Mental Health
+![Sleep Boxplot](visuals/Sleep_Boxplot.png)
+
+### Feature Correlation Heatmap
+![Heatmap](visuals/Heatmap.png)
+
+---
 
  ## Tools & Technologies
  - Python (Jupyter Notebook)
@@ -50,6 +62,8 @@ We trained two models - Logistic Regression and Random Forest - and used SHAP (S
 ## SHAP Explanation
 
 ### Global Feature Importance (Beeswarm Plot)
+SHAP was used to interpret the overall contribution of each feature to the model’s predictions.
+![SHAP Beeswarm](visuals/SHAP_Beeswarm.png)
 - SHAP values were computed for 1,000 individuals.
 - Top predictive features:
   - **Age**
@@ -58,9 +72,26 @@ We trained two models - Logistic Regression and Random Forest - and used SHAP (S
   - **Physical Activity**
   - **Work Hours**
 
-> Bright Pink = high feature value
-> Blue = low feature value
-> E.g., **High social media use** and **fewer sleep hours** were linked to increased mental health risk
+---
+
+### Local Explanations (Waterfall Plots)
+Below are five example individuals, showing how specific features impacted their predicted mental health risk.  
+Red bars push the prediction **higher** (toward "Yes"), and blue bars push it **lower** (toward "No").
+
+#### Individual 1
+![Waterfall Plot 1](visuals/Waterfall_Plot_1.png)
+
+#### Individual 2
+![Waterfall Plot 2](visuals/Waterfall_Plot_2.png)
+
+#### Individual 3
+![Waterfall Plot 3](visuals/Waterfall_Plot_3.png)
+
+#### Individual 4
+![Waterfall Plot 4](visuals/Waterfall_Plot_4.png)
+
+#### Individual 5
+![Waterfall Plot 5](visuals/Waterfall_Plot_5.png)
 
 ---
 
