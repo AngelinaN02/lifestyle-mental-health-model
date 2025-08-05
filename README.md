@@ -7,12 +7,15 @@ This repository contains a machine learning model trained to predict mental heal
 ## Overview
 
 **Task Definition**
+
 The task is to classift whether an individual reports a mental health condition (`Yes` or `No`) based on lifestyle habits such as sleep, stress level, physical activity, work hours, diet, and substance use.
 
 **Approach**
+
 The problem is treated as a binary classification task. A Random Forest classifier was trained using encoded categorical and numerical features. Exploratory Data Analysis (EDA) was performed to understand key trends, and feature importance was used to interpret the model.
 
 **Performance Summary**
+
 The model achieved an accuracy of approximately **50%**. Although predictive performce was low, the model's most important features aligned with real-world indicators of mental health.
 
 ---
