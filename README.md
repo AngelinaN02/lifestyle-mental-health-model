@@ -1,111 +1,131 @@
-# Mental Health Lifestyle Prediction
+# Mental Health & Lifestyle Classifier
+
+This repository contains a machine learning model trained to predict mental health conditions based on lifestyle and demographic data, using survey responses from a publicy available dataset on Zenodo.
+
+---
 
 ## Overview
-This project uses machine learning to predict whether an individual is at risk for a mental health condition based on their lifestyle behaviors. By analyzing factors like stress, diet, and physical activity, we aim to uncover patterns that contribute to mental health outcomes.
-We trained two models - Logistic Regression and Random Forest - and used SHAP (SHapley Additive Explanations) to interpret and visualize model predicitions.
+
+**Task Definition**
+The task is to classift whether an individual reports a mental health condition (`Yes` or `No`) based on lifestyle habits such as sleep, stress level, physical activity, work hours, diet, and substance use.
+
+**Approach**
+The problem is treated as a binary classification task. A Random Forest classifier was trained using encoded categorical and numerical features. Exploratory Data Analysis (EDA) was performed to understand key trends, and feature importance was used to interpret the model.
+
+**Performance Summary**
+The model achieved an accuracy of approximately **50%**. Although predictive performce was low, the model's most important features aligned with real-world indicators of mental health.
+
+---
+
+## Summary of Work Done
+
+- Cleaned and encoded categorical and numerical survey data
+- Explored key distributions through visualizations
+- Trained a Random Forest classifier with 80/20 train-test split
+- Evaluated model performance using accuracy, precision, recall and confusion matrix
+
+---
+
+## Data
+
+**Type**
+Tabular CSV file
+
+**Source**
+[Zenodo DOI: 10.5281/zenodo.14838680](https://doi.org/10.5281/zenodo.14838680)
+
+**Size**
+~50,000 rows x 17 columns
+
+**Split**
+- 80% training (40,000)
+- 20% testing (10,000)
+
+**Preprocessing Steps**
+- Dropped irrelevent or identifier columns
+- Encoded categorical features with `LabelEncoder`
+- Handled missing values in severity and lifestyle columns
+- Converted target to binary encoding
 
 --- 
 
-## Objetives
-- Predict mental health conditions from lifestyle and demographic data
-- Identify which features most influence model decisions
-- Visualize and explain model behavior using SHAP
+## Data Visualization
+
+Visualizations include:
+
+- Sleep Hours Distribution by Mental Health Condition
+- Stress Level by Mental Health Condition
+- Medication Usage by Condition
+- Feature Importance from the Random Forest Model
+
+These visuals helped confirm feature relevance and guided model interpretation.
 
 ---
 
-## Dataset
-- **Title**: *Mental Health and Lifestyle Dataset for Sentiment Analysis*
-- **Author**: B. Pandey (2024)
-- **Source**: [Zenodo – DOI: 10.5281/zenodo.14838680](https://doi.org/10.5281/zenodo.14838680)
-- **Type**: Tabular (CSV)
-- **Size**: ~50,000 rows, 17 columns  
-- **Target**: `Mental_Health_Condition` (`Yes`/`No`)
-- **Features include**:
-  - Age, Gender, Occupation
-  - Sleep Hours, Stress Level, Physical Activity
-  - Work Hours, Diet Quality, Social Media Usage
-  - Smoking, Alcohol, Medication Usage
+## Problem Formulation
+
+- **Input:** Lifestyle and demographic survey responses
+- **Output:** Mental health condition (Yes/No)
+- **Model:** Random Forest (Scikit-learn)
+- **Loss/Optimizer:** Not applicable for RF; uses Gini-based impurity split
+- **Hyperparameters:** Used default 100 estimators; `random_state=42`
 
 ---
 
-## Exploratory Data Analysis (EDA)
-### Stress vs. Mental Health
-![Stress Barplot](visuals/Stress_Barplot.png)
+## Training
 
-### Sleep Hours Distribution by Mental Health
-![Sleep Boxplot](visuals/Sleep_Boxplot.png)
+- Trained using `scikit-learn` on Google Colab
+- Runtime: ~5 seconds for training on ~40k rows
+- Model trained in a single session; no early stopping or tuning
+- No overfitting observed; model generalized poorly, suggesting limited predictive signal
+- Key difficulty: weak correlations between features and target
 
-### Feature Correlation Heatmap
-![Heatmap](visuals/Heatmap.png)
+--- 
 
----
+## Performance Comparison
 
- ## Tools & Technologies
- - Python (Jupyter Notebook)
- - `pandas`, `numpy`, `matplotlib`, `seaborn`
- - `scikit-learn` for modeling
- - `shap` for explainability
+| Metric     | Value  |
+|------------|--------|
+| Accuracy   | 50%    |
+| Precision  | ~0.50  |
+| Recall     | ~0.50  |
+| F1-Score   | ~0.50  |
 
----
+**Top Features by Importance:**
+- Sleep_Hours
+- Social_Media_Usage
+- Work_Hours
+- Physical_Activity_Hours
+- Age
 
-## Model Summary
-| Model                | Accuracy | Key Insight                              |
-|---------------------|----------|-------------------------------------------|
-| Logistic Regression | ~50%     | Simple baseline; struggled with complexity |
-| Random Forest       | ~50%     | Slightly better separation between classes |
-| SHAP                | —        | Offered feature-level interpretability     |
-
-> Despite a balanced dataset, the models had low predictive power, showing that mental health outcomes are difficult to predict from survey-based lifestyle data alone.
-
----
-
-## SHAP Explanation
-
-### Global Feature Importance (Beeswarm Plot)
-SHAP was used to interpret the overall contribution of each feature to the model’s predictions.
-![SHAP Beeswarm](visuals/SHAP_Beeswarm.png)
-- SHAP values were computed for 1,000 individuals.
-- Top predictive features:
-  - **Age**
-  - **Social Media Usage**
-  - **Sleep Hours**
-  - **Physical Activity**
-  - **Work Hours**
+No ROC curve included due to baseline-level performance.
 
 ---
 
-### Local Explanations (Waterfall Plots)
-Below are five example individuals, showing how specific features impacted their predicted mental health risk.  
-Red bars push the prediction **higher** (toward "Yes"), and blue bars push it **lower** (toward "No").
+## Conclusions
 
-#### Individual 1
-![Waterfall Plot 1](visuals/Waterfall_Plot_1.png)
-
-#### Individual 2
-![Waterfall Plot 2](visuals/Waterfall_Plot_2.png)
-
-#### Individual 3
-![Waterfall Plot 3](visuals/Waterfall_Plot_3.png)
-
-#### Individual 4
-![Waterfall Plot 4](visuals/Waterfall_Plot_4.png)
-
-#### Individual 5
-![Waterfall Plot 5](visuals/Waterfall_Plot_5.png)
+The model identified relevant health-related features, but the signal was not strong enough to enable useful predictions. Additional feature engineering and more sophisticated models could improve outcomes.
 
 ---
 
-### Individual Predicition Explanation (Waterfall Plot)
-- Example subject (Age: 48, Sleep: 6.9 hours):
-  - **Age** slightly decreased the predicted risk.
-  - **Sleep Hours** slightly increased it.
-- The model prediction was ~0.497, indicating low confidence.
+## Future Work
 
-Waterfall plots offer a detailed breakdown of each feature's contribution to the decision. Plots are included in the `visuals/` folder.
+- Try XGBoost or LightGBM for improved performance
+- Apply one-hot encoding to nominal features (e.g., Occupation)
+- Use interaction terms or domain knowledge to build composite features
+- Integrate SHAP values for deeper model explainability
+- Collect more structured or clinical data to supplement lifestyle inputs
 
-## Conclusion
-This project set out to predict the presence of mental health conditions using self-reported lifestyle data. While both models performed near chance level, SHAP visualizations revealed useful patterns. Stress, sleep, diet, and screen time appear to be consistently impactful.
+---
 
-While prediction proved difficult, the use of model explanation techniques like SHAP helped reveal useful patterns — underscoring the role of interpretability in health-related machine learning projects.
+## Software Setup
+`pandas`
+`numpy`
+`matplotlib`
+`seaborn`
+`scikit-learn`
 
-These results emphasize the complexity of mental health prediction and highlight the need for more comprehensive or longitudinal data to build better models.
+---
+
+## Citations
+Pandey, B. (2024). *Mental Health and Lifestyle Dataset for Sentiment Analysis*. Zenodo. https://doi.org/10.5281/zenodo.14838680
